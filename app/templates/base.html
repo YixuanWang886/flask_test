@@ -1,18 +1,30 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-    <title>Yixuan's Blog Title</title>
+    {% if current_user.is_anonymous %}
+    <title>Not logged in</title>
+    {% else %}
+    <title>{{ current_user.username }}'s Blog Title</title>
+    {% endif %}
     <meta charset="utf-8">
+    <link rel="icon" href="{{ url_for('static', filename='melon.ico') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <!-- Add your CSS stylesheets and other meta tags here -->
 </head>
 <body>
-    <h1>Yixuan's Blog</h1>
+    {%if current_user.is_anonymous%}
+    <title>Not login yet</title>
+    {%else%}
+    <title>Yixuan's Blog Title</title>
+    {%endif%}
     <div>
         Microblog:
         <a href="{{ url_for('index') }}">Home</a>
         {% if current_user.is_anonymous %}
         <a href="{{ url_for('login') }}">Login</a>
         {% else %}
+        <a href="{{ url_for('user', username=current_user.username) }}">Profile</a>
         <a href="{{ url_for('logout') }}">Logout</a>
         {% endif %}
     </div>
